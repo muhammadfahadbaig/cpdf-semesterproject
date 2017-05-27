@@ -9,6 +9,7 @@
 #include <fstream>
 #include <vector>
 #include <iostream>
+#include <map>
 #include <string.h> // Include C-Style String Library header
 #include "spdf-commonDefinitions.h"
 
@@ -37,6 +38,8 @@ public:
     void loadXref(int);
     std::string getline(std::fstream&);
 	void loadPageStructure();
+	std::string resolveObject(std::map<int, std::string>::iterator);
+	std::string trim(std::string);
 };
 
 #endif

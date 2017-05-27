@@ -4,5 +4,6 @@
 #include<map>
 
 typedef std::map<int, std::string> dictionary;
+const char newline{ '\n' };
 
 #endif
