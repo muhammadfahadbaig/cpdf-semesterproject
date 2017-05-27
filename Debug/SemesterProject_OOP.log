@@ -1,6 +1,0 @@
-﻿  PDFParser.cpp
-c:\users\test\documents\visual studio 2017\projects\pdfparser-console\semesterproject_oop\pdfparser.cpp(15): warning C4129: 'g': unrecognized character escape sequence
-c:\users\test\documents\visual studio 2017\projects\pdfparser-console\semesterproject_oop\pdfparser.cpp(18): warning C4129: 'g': unrecognized character escape sequence
-c:\users\test\documents\visual studio 2017\projects\pdfparser-console\semesterproject_oop\pdfparser.cpp(29): warning C4101: 'except': unreferenced local variable
-  SemesterProject_OOP.vcxproj -> C:\Users\Test\documents\visual studio 2017\Projects\PDFParser-Console\Debug\SemesterProject_OOP.exe
-  SemesterProject_OOP.vcxproj -> C:\Users\Test\documents\visual studio 2017\Projects\PDFParser-Console\Debug\SemesterProject_OOP.pdb (Partial PDB)
