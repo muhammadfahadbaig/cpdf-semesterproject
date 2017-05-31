@@ -1,8 +1,9 @@
 //
-// Created by Test on 5/27/2017.
+// SPDF SUPPLEMENTARY
 //
 
 #include "spdf-structure.h"
+#include <sstream>
 
 using namespace std;
 
@@ -41,38 +42,3 @@ string spdf::trim(string line)
 	endobj
 */
 
-string spdf::resolveObject(map<int, string>::iterator i)
-{
-	// Extract object's offset
-	int objectOffset = stoi(i->second.substr(0, i->second.find_first_of(",")));
-	pdfFile.seekg(objectOffset, ios::beg);
-	
-	// Verify if the declaration is correct (1 X obj)
-	string temp = trim(spdf::getline(pdfFile));
-	if (stoi(temp.substr(0, temp.find_first_of(" "))) == i->first &&
-		temp.substr(temp.find_last_of(" ")+1) == "obj")
-	{
-		// Now perform the operations
-		temp = "";
-		while (true)
-		{
-			string check{};
-			check = trim(spdf::getline(pdfFile));
-			if (check != "endobj")
-			{
-				temp.append(check);
-				temp.append(&newline);
-			}
-			else
-			{
-				break;
-			}
-				
-		}
-	}
-	else
-	{
-		temp = "Invalid Object!";
-	}
-	return temp;
-}

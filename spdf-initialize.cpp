@@ -15,20 +15,25 @@ void spdf::init() // TODO Deal with Linearized PDFs
     if (!performEOFCheck())
         throw "Unable to find %%EOF tag. Probably invalid PDF file.";
 
-    // Performing search for startxref flag that'll point to xref location
+						
+	// Performing search for startxref flag that'll point to xref location
     char charTemp{ '\0' };
+	int pos{-1};
     do
     {
-        pdfFile.seekg(-2, ios::cur);
+        pdfFile.seekg(pos, ios::end);
         if (charTemp == 'f') //startxref ends in f
             break;
-    } while (pdfFile.get(charTemp));
+		//if (charTemp == '\n')
+		//	pdfFile.seekg(-1, ios::cur);
+		--pos;
+    } while (pdfFile.read(&charTemp,1));
 
     spdf::getline(pdfFile); // Move to next line
     string xrefLocationStr{};
     xrefLocationStr = getline(pdfFile);
-    xrefLocation = stoi(xrefLocationStr); 
-
+    xrefLocation = stoi(xrefLocationStr);
+	xrefTableLocation = xrefLocation;
     if (xrefLocation == 0)
     {
         throw "Unable to find Xref location. Probably an invalid PDF file.";

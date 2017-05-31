@@ -7,6 +7,7 @@ using namespace std;
 
 int main(void)
 {
-    spdf testRun("D:\\hello.pdf");
-	testRun.loadPageStructure();
+    spdf testRun("D:\\CS112-Assignment.pdf");
+	testRun.loadObjectStructure();
+	cout << "loaded";
 }

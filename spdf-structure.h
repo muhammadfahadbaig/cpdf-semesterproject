@@ -1,5 +1,5 @@
 //
-// Created by Test on 5/27/2017.
+// SPDF STRUCTURE
 //
 
 #ifndef SPDF_STRUCTURE_H
@@ -17,8 +17,14 @@ struct pageTree
 {
 	int pageCatalogObject;
 	int pageKidsObject;
-	int pageNumber;
+	int totalPages;
 	std::vector<int> pageObjects;
+};
+
+struct spdfObjectNorm
+{
+	std::vector<std::string> objectTags;
+	std::map <int,std::string> conArray;
 };
 
 class spdf
@@ -30,6 +36,7 @@ private:
     dictionary xref;
 	pageTree spdfPages;
     int eofLocaction;
+	int xrefTableLocation;
 public:
     spdf(const char * pathToFile);
     virtual ~spdf();
@@ -37,9 +44,12 @@ public:
     bool performEOFCheck();
     void loadXref(int);
     std::string getline(std::fstream&);
-	void loadPageStructure();
-	std::string resolveObject(std::map<int, std::string>::iterator);
+	void loadObjectStructure();
+	void resolveObject(std::map<int, std::string>::iterator);
 	std::string trim(std::string);
+	bool loadPageTree(std::map<int, std::string>::iterator);
+	bool isIndirectObject(const std::string &, size_t); // Indirect Objects like # # obj
+	bool isIndirectObject(const std::string &, size_t, size_t&);
 };
 
 #endif

@@ -1,5 +1,5 @@
 //
-// Created by Test on 5/27/2017.
+// SPDF VALIDATION
 //
 
 #include "spdf-structure.h"
