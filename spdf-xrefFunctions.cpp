@@ -20,6 +20,39 @@ void spdf::loadXref(int xrefPos) // TODO : Add compressed streams support
                                                      1); // Adopting PDF newline conventions and removing trailing spaces and break sequences
         if (line.length() == 0) break;
 
+		if (line == "0 0")  // Special condition for most pdf that have multiple trailer entries.
+							// We are not dealing with multiple times updated PDFs but I'm still adding this condition
+							// We'll find the new xref location
+		{
+			// Performing search for startxref flag that'll point to xref location
+			pdfFile.seekg(xrefPos, ios::beg);
+			char charTemp{ '\0' };
+			int pos{ -1 };
+			do
+			{
+				pdfFile.seekg(xrefPos + pos, ios::beg);
+				if (charTemp == 'f') //startxref ends in f
+					break;
+				--pos;
+			} while (pdfFile.read(&charTemp, 1));
+			spdf::getline(pdfFile); // Move to next line
+			string xrefLocationStr{};
+			xrefLocationStr = getline(pdfFile);
+			xrefPos = stoi(xrefLocationStr);
+			xrefTableLocation = xrefPos;
+			if (xrefPos == 0)
+			{
+				throw "Unable to find Xref location. Probably an invalid PDF file.";
+			}
+			else
+			{
+				xrefTableLocation = xrefPos;
+				pdfFile.seekg(xrefPos, ios::beg);
+				spdf::getline(pdfFile);
+				continue;
+			}
+		}
+
         /*
             A normal entry in Xref table looks like one shown below
             0000000000 65535 f
